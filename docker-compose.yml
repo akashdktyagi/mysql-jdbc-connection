@@ -1,0 +1,30 @@
+
+# Create by Akash Tyagi:
+# Date: Jan-2021
+# Descp: This compose file can be used to set up temp data base with php my admin for DB UI.
+# To run this file, go to the root directory of this file:
+  # 1. "docker-compose up"
+# To Stop the execution: first press the
+  # 2. press "cntrl+c" and then run the command:
+  # 3. "docker-compose down --remove-orphans"
+
+version: "3"
+services:
+  my-own-mysql:
+    image: mysql:8.0
+    container_name: my-own-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./sql/db:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+
+  my-own-phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: my-own-phpmyadmin
+    links:
+      - 'my-own-mysql:db'
+    ports:
+      - '8081:80'
+

@@ -8,18 +8,25 @@ import java.sql.Connection;
         import java.sql.Statement;
         import java.util.Date;
 
-public class TestJDBCConnection {
+public class Advanced {
 
     private Connection connect = null;
     private Statement statement = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
 
-    final private String host = "xxxxxxxxxxxxxxxxxxxxxxxx";
-    final private String user = "xxxxxxxx";
-    final private String passwd = "xxxxxxxxxxx";
+    final private String host = "http://localhost:3306";
+    final private String user = "root";
+    final private String passwd = "root";
 
-    public void readDataBase() throws Exception {
+
+    public static void main(String[] args) throws Exception{
+        Advanced obj = new Advanced();
+        String query="";
+        obj.readDataBase(query);
+    }
+
+    public void readDataBase(String query) throws Exception {
         try {
             // This will load the MySQL driver, each DB has its own driver
             Class.forName("com.mysql.jdbc.Driver");
@@ -33,7 +40,7 @@ public class TestJDBCConnection {
             statement = connect.createStatement();
             // Result set get the result of the SQL query
             resultSet = statement
-                    .executeQuery("select * from feedback.comments");
+                    .executeQuery(query);
             writeResultSet(resultSet);
 
             // PreparedStatements can use variables and are more efficient
